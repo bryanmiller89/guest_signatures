@@ -5,11 +5,13 @@ const parseurl = require('parseurl');
 const bodyParser = require('body-parser');
 const path = require('path');
 const expressValidator = require('express-validator');
-const Signature = require('./models/signature');
+const uniqueValidator = require('mongoose-unique-validator');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const app = express();
-const url = process.env.MONGOLAB_URI;
+var mongodb = require('mongodb');
+var MongoClient = mongodb.MongoClient;
+var url = process.env.MONGOLAB_URI;
 
 //=========================//
 
@@ -31,13 +33,26 @@ mongoose.Promise = require('bluebird');
 
 //====MONGOOSE PROMISE===//
 
-mongoose.connect(url, function (err, db) {
+MongoClient.connect(url, function (err, db) {
  if (err) {
    console.log('Unable to connect to the mongoDB server. Error:', err);
  } else {
    console.log('Connection established to', url);
  }
 });
+
+//==========================//
+
+//====REDIRECT TO SPLASH WHEN AT ROOT===//
+
+app.get('/', function(req, res) {
+  res.redirect('/api/signatures');
+});
+
+app.use(function(req, res, next) {
+  console.log('I dont like programming anymore');
+  next();
+})
 
 //==========================//
 
