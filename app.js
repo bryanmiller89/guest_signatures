@@ -50,15 +50,14 @@ mongoose.connect(url, function (err, db) {
 
 //====TEST THE CONNECTION===//
 
-app.get('/', function(req, res) {
-  res.json('you did it');
-});
-
-
 app.use(function(req, res, next) {
   console.log('I dont like programming anymore');
   next();
 })
+
+app.get('/', function(req, res) {
+  res.json('you did it');
+});
 
 //==========================//
 
