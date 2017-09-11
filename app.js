@@ -10,9 +10,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const Signature = require('./models/signature.js')
 const app = express();
-var mongodb = require('mongodb');
-var MongoClient = mongodb.MongoClient;
-// const url = 'mongodb://EthanJarrell:EJ3102nl1@ds129024.mlab.com:29024/signatures';
+// const url = 'mongodb://localhost:27017/signatures';
 const url = process.env.MONGOLAB_URI;
 
 //=========================//
@@ -36,7 +34,7 @@ mongoose.Promise = require('bluebird');
 
 //====MONGOOSE PROMISE===//
 
-MongoClient.connect(url, function (err, db) {
+mongoose.connect(url, function (err, db) {
  if (err) {
    console.log('Unable to connect to the mongoDB server. Error:', err);
  } else {
