@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const expressValidator = require('express-validator');
 const uniqueValidator = require('mongoose-unique-validator');
+const mustacheExpress = require('mustache-express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const Signature = require('./models/signature.js')
@@ -17,6 +18,9 @@ const url = process.env.MONGOLAB_URI;
 
 //====SET APP ENGINE===//
 
+app.engine('mustache', mustacheExpress());
+app.set('view engine', 'mustache');
+app.set('views', './views');
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -44,11 +48,8 @@ mongoose.connect(url, function (err, db) {
 
 //==========================//
 
-//====REDIRECT TO SPLASH WHEN AT ROOT===//
+//====TEST THE CONNECTION===//
 
-app.get('/', function(req, res) {
-  res.redirect('/api/signatures');
-});
 
 app.use(function(req, res, next) {
   console.log('I dont like programming anymore');
@@ -60,13 +61,10 @@ app.use(function(req, res, next) {
 //====GET ALL SIGNATURES===//
 
 app.get('/api/signatures', function(req, res) {
-  Signature.find({}).then(function(guest_signatures) {
-        console.log(guest_signatures);
-        res.render('signatures', {
-          guest_signatures: guest_signatures,
-        })
-      });
-    });
+  Signature.find({}).then(eachOne => {
+    res.json(eachOne);
+    })
+  })
 
 //==========================//
 
@@ -75,8 +73,8 @@ app.get('/api/signatures', function(req, res) {
 app.post('/api/signatures', function(req, res) {
   Signature.create({
     guestSignature: req.body.SignatureOfGuest,
-  }).then(guest_signatures => {
-    res.redirect('/api/signatures')
+  }).then(signature => {
+    res.json(signature)
   });
 });
 
@@ -92,4 +90,4 @@ console.log('starting applicaiton.  Good job!');
 
 //====EXPORT APP===//
 
-module.exports = app;
+// module.exports = app;
