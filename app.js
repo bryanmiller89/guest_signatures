@@ -8,15 +8,18 @@ const expressValidator = require('express-validator');
 const uniqueValidator = require('mongoose-unique-validator');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const Signature = require('./models/signature.js')
 const app = express();
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
-var url = process.env.MONGOLAB_URI;
+// const url = 'mongodb://EthanJarrell:EJ3102nl1@ds129024.mlab.com:29024/signatures';
+const url = process.env.MONGOLAB_URI;
 
 //=========================//
 
 //====SET APP ENGINE===//
 
+app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
