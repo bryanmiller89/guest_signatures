@@ -51,7 +51,7 @@ mongoose.connect(url, function (err, db) {
 //====TEST THE CONNECTION===//
 
 app.get('/', function(req, res) {
-  res.redirect('/api/signatures');
+  res.json('you did it');
 });
 
 
