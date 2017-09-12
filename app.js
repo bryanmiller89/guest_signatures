@@ -76,6 +76,7 @@ app.get('/api/signatures', function(req, res) {
 app.post('/api/signatures', function(req, res) {
   Signature.create({
     guestSignature: req.body.SignatureOfGuest,
+    message: req.body.MessageofGuest,
   }).then(signature => {
     res.json(signature)
   });
