@@ -65,7 +65,7 @@ app.get('/', function(req, res) {
 
 //====GET ALL SIGNATURES===//
 
-app.get('/api/signatures', function(req, res) {
+app.get('/api/signatures', cors(), function(req, res) {
   Signature.find({}).then(eachOne => {
     res.json(eachOne);
     })
@@ -75,7 +75,7 @@ app.get('/api/signatures', function(req, res) {
 
 //====POST NEW SIGNATURE===//
 
-app.post('/api/signatures', function(req, res) {
+app.post('/api/signatures', cors(), function(req, res) {
   Signature.create({
     guestSignature: req.body.SignatureOfGuest,
     message: req.body.MessageofGuest,
