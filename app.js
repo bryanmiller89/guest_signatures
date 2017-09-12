@@ -10,6 +10,7 @@ const mustacheExpress = require('mustache-express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const Signature = require('./models/signature.js')
+const cors = require('cors')
 const app = express();
 // const url = 'mongodb://localhost:27017/signatures';
 const url = process.env.MONGOLAB_URI;
@@ -21,6 +22,7 @@ const url = process.env.MONGOLAB_URI;
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
 app.set('views', './views');
+app.use(cors())
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
